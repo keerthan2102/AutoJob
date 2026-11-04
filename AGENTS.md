@@ -36,3 +36,10 @@ regex matching a "Bewerben" or "Başvur" button alongside "Apply").
 Follow [CONTRIBUTING.md](CONTRIBUTING.md) for other development and validation
 steps. Keep temporary page content and the Jev cache in RAM; read pages again
 after the application restarts.
+
+## Cursor Cloud specific instructions
+
+- Toolchain: Node.js 22.22.3+ and pnpm 10.14.0 (see `packageManager`), Rust 1.90.0 from `rust-toolchain.toml`. `pnpm bootstrap` verifies vendored TermLoop, installs dependencies, builds the renderer, and compiles the engine.
+- Electron 43 does not download its binary from a postinstall script. After `pnpm install`, run `node node_modules/electron/install.js`.
+- Launch the desktop app with `pnpm exec electron .` on the existing display (`DISPLAY=:1` when the desktop is up). Interface smokes on Linux need Xvfb (`xvfb-run -a`), as CI does.
+- Local checks: `pnpm check`, `pnpm test`, and `cargo test --locked --manifest-path engine/Cargo.toml --target-dir engine/target`.
