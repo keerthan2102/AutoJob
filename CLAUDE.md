@@ -38,3 +38,10 @@ steps. Keep temporary page content and the Jev cache in RAM; read pages again
 after the application restarts. The one exception is a record's listing
 description, saved on disk (`workspace_record_descriptions`) only so the user can
 read it in the record panel; agents and scoring still read the page again.
+
+## Cursor Cloud specific instructions
+
+- Toolchain: Node.js 22.22.3+ and pnpm 10.14.0 (see `packageManager`), Rust 1.90.0 from `rust-toolchain.toml`. `pnpm bootstrap` verifies vendored TermLoop, installs dependencies, builds the renderer, and compiles the engine.
+- Electron 43 does not download its binary from a postinstall script. After `pnpm install`, run `node node_modules/electron/install.js`.
+- Launch the desktop app with `pnpm exec electron .` on the existing display (`DISPLAY=:1` when the desktop is up). Interface smokes on Linux need Xvfb (`xvfb-run -a`), as CI does.
+- Local checks: `pnpm check`, `pnpm test`, and `cargo test --locked --manifest-path engine/Cargo.toml --target-dir engine/target`.
